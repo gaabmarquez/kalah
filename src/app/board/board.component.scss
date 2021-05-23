@@ -1,0 +1,31 @@
+.board-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: peru;
+}
+
+.end-zone {
+  margin: 10px 50px;
+  border-radius: 50%;
+  border: 1px solid black;
+  height: 200px;
+  width: 120px;
+}
+.opp-pits,
+.player-pits {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px;
+  border: 1px solid white;
+
+}
+// .opp-pits {
+//   background-color: red;
+// }
+
+// .player-pits {
+//     background-color: blue;
+//   }
+  

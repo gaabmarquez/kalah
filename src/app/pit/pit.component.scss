@@ -1,0 +1,39 @@
+.pit-container {
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+  background-color: inherit;
+  margin: 5px;
+  border: 1px solid white;
+  position: relative;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 15px;
+}
+
+.pit-container.end-zone {
+  height: 300px;
+  width: 220px;
+  margin: 40px;
+  padding: 30px;
+  cursor: auto;
+}
+.disabled {
+  pointer-events: none;
+}
+.badge {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 15px;
+  left: 20px;
+}

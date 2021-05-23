@@ -3,10 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GameComponent } from './game/game.component';
+import { BoardComponent } from './board/board.component';
+import { PitComponent } from './pit/pit.component';
+import { SeedComponent } from './seed/seed.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GameComponent,
+    BoardComponent,
+    PitComponent,
+    SeedComponent
   ],
   imports: [
     BrowserModule,

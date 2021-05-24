@@ -7,6 +7,8 @@ import { GameComponent } from './game/game.component';
 import { BoardComponent } from './board/board.component';
 import { PitComponent } from './pit/pit.component';
 import { SeedComponent } from './seed/seed.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,10 +17,14 @@ import { SeedComponent } from './seed/seed.component';
     BoardComponent,
     PitComponent,
     SeedComponent
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot()
+
   ],
   providers: [],
   bootstrap: [AppComponent]

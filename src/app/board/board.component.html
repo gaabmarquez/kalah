@@ -1,18 +1,17 @@
-<div class="board-container">
-    <p>
-        Current Turn
-        <span>
-            <i>
-                {{playerTurn? "Player": "Opponent"}}
+<p style="text-align: center; font-size: 1.8rem;">
+    Current Turn:
+    <i class="turn" [ngClass]="{'player': playerTurn}">
+        {{playerTurn? "Player": "Opponent"}}
 
-            </i>
-        </span>
-    </p>
+    </i>
+</p>
+
+<div class="board-container">
+
     <app-pit [amount]="oppAmount" [endZone]="true"></app-pit>
     <div class="pits">
         <div class="opp-pits">
             <ng-container *ngFor="let pit of [1,2,3,4,5,6]; let i=index;">
-                {{i}}
                 <app-pit (pitSelected)="onPitSelected($event, i, false)" [amount]="oppSeeds[i]" [disabled]="playerTurn">
                 </app-pit>
             </ng-container>
@@ -20,8 +19,6 @@
 
         <div class="player-pits">
             <ng-container *ngFor="let pit of [1,2,3,4,5,6]; let i=index;">
-                {{i}}
-
                 <app-pit (pitSelected)="onPitSelected($event, i, true)" [amount]="playerSeeds[i]"
                     [disabled]="!playerTurn"></app-pit>
             </ng-container>
@@ -30,3 +27,5 @@
 
     <app-pit [amount]="playerAmount" [endZone]="true"></app-pit>
 </div>
+
+<simple-notifications [options]="notifOptions"></simple-notifications>

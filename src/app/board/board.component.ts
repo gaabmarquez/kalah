@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NotificationAnimationType, NotificationsService, Options } from 'angular2-notifications';
-import { Game } from '../game/model/game.model';
 
 @Component({
   selector: 'app-board',
@@ -68,10 +67,7 @@ export class BoardComponent {
     }
     this.sendInfo();
   }
-  win() {
-    this.announceWinner();
-    this.sendInfo();
-  }
+
   sendInfo() {
 
     this.moveEnded.emit({
@@ -125,7 +121,6 @@ export class BoardComponent {
     return amount;
 
   }
-
 
 
   dealSeedsPlayerB(index, amount, take = false) {

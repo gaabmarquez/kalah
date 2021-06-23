@@ -1,12 +1,9 @@
 <ng-container *ngIf="winner==''">
     <p class="turn">
         Current Turn: {{playerATurn? "Player": "Opponent"}}
-
     </p>
 
-
     <div class="board-container">
-
         <app-pit [amount]="playerBAmount" [endZone]="true"></app-pit>
         <div class="pits">
             <div class="opp-pits">
@@ -28,9 +25,5 @@
         <app-pit [amount]="playerAAmount" [endZone]="true"></app-pit>
     </div>
 </ng-container>
-
-
-<button (click)="win()">WIN</button>
-
 
 <simple-notifications [options]="notifOptions"></simple-notifications>

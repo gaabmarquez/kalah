@@ -17,7 +17,6 @@ export class MessageService {
   public msg = [];
 
   initializeWebSocketConnection() {
-    const serverUrl = 'http://localhost:8080/socket';
     const ws = new SockJS(environment.backendURL);
     this.stompClient = Stomp.over(ws);
     const that = this;

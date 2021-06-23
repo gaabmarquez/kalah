@@ -10,7 +10,6 @@ import { Game } from './model/game.model';
 })
 export class GameComponent implements OnInit {
 
-  // currentTurn: 'Player' | 'Opponent' = 'Player';
   playerATurn = false;
   currentGame: Game = undefined;
   gameInitialized = false;
@@ -26,9 +25,8 @@ export class GameComponent implements OnInit {
 
   };
 
-  constructor(public messageService: MessageService, private notificationService: NotificationsService) {
-
-  }
+  constructor(private messageService: MessageService,
+    private notificationService: NotificationsService) { }
 
 
 
@@ -106,7 +104,6 @@ export class GameComponent implements OnInit {
       winner: ''
 
     };
-    //  this.currentGame = gameToSend;
     this.messageService.sendMessage(gameToSend);
   }
 

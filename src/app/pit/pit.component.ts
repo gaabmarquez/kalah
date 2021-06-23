@@ -5,7 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
   templateUrl: './pit.component.html',
   styleUrls: ['./pit.component.scss']
 })
-export class PitComponent implements OnInit, OnChanges {
+export class PitComponent implements OnChanges {
 
   @Input() amount;
   @Input() disabled = false;
@@ -14,9 +14,7 @@ export class PitComponent implements OnInit, OnChanges {
   seeds;
   constructor() { }
 
-  ngOnInit() {
-    // this.seeds = new Array(this.amount)
-  }
+
   ngOnChanges() {
     this.seeds = new Array(this.amount)
 

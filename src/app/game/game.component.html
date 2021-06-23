@@ -1,7 +1,4 @@
-<!-- <h2>{{playerATurn}}</h2> -->
-<h1>
-    KALAH
-</h1>
+<h1> KALAH </h1>
 
 <div *ngIf="gameInitialized && winner==''" class="game-container">
 
@@ -9,23 +6,19 @@
         [playerBAmount]="currentGame.playerBAmount" [playerBSeeds]="currentGame.playerBSeeds"
         [playerATurn]="playerATurn" (moveEnded)="onMoveEnded($event)"
         (notificationEmitted)="onNotificationEmitted($event)">
-
     </app-board>
 </div>
 
 
 
-
 <div *ngIf="!gameInitialized" class="welcome-container">
     <h1>
-
         {{joined? 'Waiting for another player': ' Welcome to Kalah Game'}}
     </h1>
 
 
     <button [hidden]="joined" (click)="joinGame()">
         {{currentGame? 'Join Existing Game': 'Create new Game'}}
-
     </button>
 
 </div>
@@ -34,11 +27,7 @@
 <div *ngIf="winner!=''" class="ended-container">
     <h2>GAME ENDED</h2>
     <p>
-        The winner is
-        <i class=" player">
-            {{winner}}
-
-        </i>
+        The winner is <i class="player"> {{winner}} </i>
     </p>
 
 

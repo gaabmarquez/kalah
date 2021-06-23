@@ -1,11 +1,8 @@
-<div class="pit-container" 
-[ngClass]="{'end-zone': endZone, 'disabled': disabled}" 
-(click)="emit()">
-  <span class="badge">
-      {{amount}}
-  </span>
+<div class="pit-container" [ngClass]="{'end-zone': endZone, 'disabled': disabled}" (click)="emit()">
+    <span class="badge">
+        {{amount}}
+    </span>
     <ng-container *ngFor="let seed of seeds">
-        <app-seed>
-        </app-seed>
+        <div class="seed"></div>
     </ng-container>
 </div>

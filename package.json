@@ -7,6 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "ghp": "ng build --prod --base-href 'https://gaabmarquez.github.io/kalah/' &&  npx ngh --dir=dist/kalah",
     "e2e": "ng e2e"
   },
   "private": true,

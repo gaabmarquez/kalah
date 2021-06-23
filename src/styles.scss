@@ -3,4 +3,28 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  color: white;
+  font-family: fantasy;
+  background-color: cornflowerblue;
+}
+
+button {
+  font-family: fantasy;
+  padding: 20px 10px;
+  border-radius: 25px;
+  background-color: white;
+  color: cornflowerblue;
+  border-color: whitesmoke;
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 25px;
+  box-shadow: none;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-10px);
+  }
 }

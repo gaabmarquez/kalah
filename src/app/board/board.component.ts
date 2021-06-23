@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NotificationAnimationType, NotificationsService, Options } from 'angular2-notifications';
+import { Game } from '../game/model/game.model';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent {
 
-  oppAmount = 0;
-  playerAmount = 0;
-  playerSeeds = new Array(6).fill(4);
-  oppSeeds = new Array(6).fill(4);
-  playerTurn = true;
 
+  @Input() playerBAmount = 0;
+  @Input() playerAAmount = 0;
+  @Input() playerASeeds;
+  @Input() playerBSeeds;
+  @Input() playerATurn;
+  @Input() winner;
+
+  @Output() moveEnded = new EventEmitter<any>();
+  @Output() notificationEmitted = new EventEmitter<any>();
+  capturedSeeds = false;
 
   notifOptions: Options = {
     position: ['top', 'right'],
-    timeOut: 1000,
+    timeOut: 2000,
     clickToClose: true,
     showProgressBar: false,
     animate: NotificationAnimationType.FromRight,
@@ -25,126 +31,93 @@ export class BoardComponent implements OnInit {
 
   };
 
-
-
-  constructor(private notificationService: NotificationsService) { }
-
-
-  ngOnInit() {
-
-  }
-
   onPitSelected(amount, index, player) {
+    this.capturedSeeds = false;
+    // if (player) {
+    this.playerATurn = !this.playerATurn;
 
-    if (player) {
-      this.playerTurn = !this.playerTurn;
+    amount = this.dealSeedsPlayer(index + 1, amount, true);
+    this.playerASeeds[index] = 0;
+    if (amount > 0) {
+      amount--;
+      this.playerAAmount++;
 
-      amount = this.dealSeedsPlayer(index + 1, amount, true);
-      this.playerSeeds[index] = 0;
-      if (amount > 0) {
-        amount--;
-        this.playerAmount++;
-
-        if (amount == 0 && this.playerSeeds.reduce((a, b) => a + b) > 0) {
-          //  last seed in endzone
-          this.playerTurn = true;
-
-          this.notificationService.info('', "Player repeat turn", {
-            theClass: ' notification'
-
-          })
-        }
-      }
-
-      if (amount > 0) {
-        amount = this.dealSeedsOpp(this.oppSeeds.length - 1, amount);
-      }
-
-      if (amount > 0) {
-        this.dealSeedsPlayer(0, amount), true;
-      }
-
-    } else {
-
-      this.playerTurn = !this.playerTurn;
-
-      amount = this.dealSeedsOpp(index - 1, amount, true);
-      this.oppSeeds[index] = 0;
-
-      if (amount > 0) {
-        amount--;
-        this.oppAmount++;
-        if (amount == 0 && this.oppSeeds.reduce((a, b) => a + b) > 0) {
-          //  last seed in endzone
-          this.playerTurn = false;
-          this.notificationService.info('', "Opponent repeat turn", {
-            theClass: ' notification'
-
-          })
-        }
-      }
-
-      if (amount > 0) {
-        amount = this.dealSeedsPlayer(0, amount);
-      }
-
-      if (amount > 0) {
-        this.dealSeedsOpp(this.oppSeeds.length - 1, amount, true);
+      if (amount == 0 && this.playerASeeds.reduce((a, b) => a + b) > 0) {
+        //  last seed in endzone
+        this.playerATurn = true;
+        this.notificationEmitted.emit('Player repeat turn')
       }
     }
-    if (this.isEndOfGame()) {
-      this.playerAmount += this.playerSeeds.reduce((a, b) => a + b);
-      this.oppAmount += this.oppSeeds.reduce((a, b) => a + b);
 
-      this.oppSeeds = this.playerSeeds = new Array(6).fill(0)
+    if (amount > 0) {
+      amount = this.dealSeedsPlayerB(this.playerBSeeds.length - 1, amount);
+    }
+
+    if (amount > 0) {
+      this.dealSeedsPlayer(0, amount), true;
+    }
+
+
+    if (this.isEndOfGame()) {
+      this.playerAAmount += this.playerASeeds.reduce((a, b) => a + b);
+      this.playerBAmount += this.playerBSeeds.reduce((a, b) => a + b);
+
+      this.playerBSeeds = this.playerASeeds = new Array(6).fill(0)
 
       this.announceWinner();
     }
+    this.sendInfo();
   }
+  win() {
+    this.announceWinner();
+    this.sendInfo();
+  }
+  sendInfo() {
 
+    this.moveEnded.emit({
+      playerASeeds: this.playerASeeds,
+      playerBSeeds: this.playerBSeeds,
+      playerAAmount: this.playerAAmount,
+      playerBAmount: this.playerBAmount,
+      repeatTurn: this.playerATurn,
+      capturedSeeds: this.capturedSeeds,
+      winner: this.winner
+    });
+
+  }
   announceWinner() {
-    if (this.playerAmount > this.oppAmount) {
-
-      this.notificationService.success('', "Player win!", {
-        theClass: ' notification'
-
-      })
+    if (this.playerAAmount > this.playerBAmount) {
+      this.winner = 'Player';
     }
-    else if (this.playerAmount < this.oppAmount) {
-
-      this.notificationService.success('', "Opponents win!", {
-        theClass: ' notification'
-
-      })
+    else if (this.playerAAmount < this.playerBAmount) {
+      this.winner = 'Opponent';
     }
     else {
-
-      this.notificationService.success('', "Tie", {
-        theClass: ' notification'
-
-      })
+      this.winner = 'Tie';
     }
+
   }
 
   isEndOfGame() {
-    return this.oppSeeds.reduce((a, b) => a + b) == 0 ||
-      this.playerSeeds.reduce((a, b) => a + b) == 0;
+    return this.playerBSeeds.reduce((a, b) => a + b) == 0 ||
+      this.playerASeeds.reduce((a, b) => a + b) == 0;
   }
 
   dealSeedsPlayer(index, amount, take = false) {
 
-    for (let i = index; i < this.playerSeeds.length; i++) {
+    for (let i = index; i < this.playerASeeds.length; i++) {
       amount--;
-      this.playerSeeds[i]++;
+      this.playerASeeds[i]++;
       if (amount == 0) {
-        if (take && this.playerSeeds[i] == 1 && this.oppSeeds[i] > 0) {
-          this.playerAmount += this.playerSeeds[i] + this.oppSeeds[i];
-          this.playerSeeds[i] = this.oppSeeds[i] = 0;
+        if (take && this.playerASeeds[i] == 1 && this.playerBSeeds[i] > 0) {
+          this.playerAAmount += this.playerASeeds[i] + this.playerBSeeds[i];
+          this.playerASeeds[i] = this.playerBSeeds[i] = 0;
 
-          this.notificationService.info('', "Player take opponent's seeds", {
-            theClass: ' notification'
 
-          })
+          this.notificationEmitted.emit("You captured opponent's seeds");
+          this.capturedSeeds = true;
+
+
         }
         break;
       }
@@ -155,22 +128,16 @@ export class BoardComponent implements OnInit {
 
 
 
-  dealSeedsOpp(index, amount, take = false) {
+  dealSeedsPlayerB(index, amount, take = false) {
 
     for (let i = index; i > -1; i--) {
       amount--;
-      this.oppSeeds[i]++;
+      this.playerBSeeds[i]++;
       if (amount == 0) {
-        if (take && this.oppSeeds[i] == 1 && this.playerSeeds[i] > 0) {
-          debugger;
+        if (take && this.playerBSeeds[i] == 1 && this.playerASeeds[i] > 0) {
 
-          this.oppAmount += this.playerSeeds[i] + this.oppSeeds[i];
-          this.playerSeeds[i] = this.oppSeeds[i] = 0;
-
-          this.notificationService.info('', "Opponent take players's seeds", {
-            theClass: ' notification'
-
-          })
+          this.playerBAmount += this.playerASeeds[i] + this.playerBSeeds[i];
+          this.playerASeeds[i] = this.playerBSeeds[i] = 0;
         }
         break;
       }

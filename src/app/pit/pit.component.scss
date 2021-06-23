@@ -4,7 +4,7 @@
   border-radius: 50%;
   background-color: inherit;
   margin: 5px;
-  border: 1px solid white;
+  border: 4px solid white;
   position: relative;
   cursor: pointer;
   position: relative;
@@ -13,6 +13,13 @@
   align-items: center;
   flex-wrap: wrap;
   padding: 15px;
+
+  .seed:nth-child(even) {
+    background: radial-gradient(circle at 5px 5px, #f6410a, #000);
+  }
+  .seed:nth-child(3n+0) {
+    background: radial-gradient(circle at 5px 5px, #ef03df, #000);
+  }
 }
 
 .pit-container.end-zone {
@@ -29,11 +36,51 @@
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  border: 1px solid blue;
+  border: 1px solid cornflowerblue;
+  background-color: cornflowerblue;
+  color: white;
+  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 15px;
-  left: 20px;
+  bottom: -5px;
+  left: 0px;
+  padding: 12px;
+}
+.seed {
+  height: 20px;
+  width: 20px;
+  // border-radius: 50%;
+  // margin: 5px;
+  // background-color: cornflowerblue;
+
+  display: block;
+  background: black;
+  border-radius: 100%;
+  // height: 300px;
+  // width: 300px;
+  margin: 0;
+  background: radial-gradient(circle at 5px 5px, #5cabff, #000);
+}
+@media (max-width: 1024px) {
+  .pit-container {
+    height: 80px;
+    width: 80px;
+  }
+  .pit-container.end-zone {
+    height: 180px;
+    width: 100px;
+    margin: 0;
+    padding: 5px;
+    cursor: auto;
+  }
+
+  .seed {
+    height: 5px;
+    width: 5px;
+  }
+  .badge {
+    font-size: 13px;
+  }
 }

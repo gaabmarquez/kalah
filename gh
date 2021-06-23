@@ -1,0 +1,7 @@
+npm run ghp
+cp dist/kalah/index.html dist/kalah/404.html
+cp -r dist/kalah/* ../bo-ui/
+cd ../bo-ui/
+git add -A 
+git cm "New version"
+git push

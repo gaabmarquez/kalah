@@ -1,31 +1,36 @@
-<p style="text-align: center; font-size: 1.8rem;">
-    Current Turn:
-    <i class="turn" [ngClass]="{'player': playerTurn}">
-        {{playerTurn? "Player": "Opponent"}}
+<ng-container *ngIf="winner==''">
+    <p class="turn">
+        Current Turn: {{playerATurn? "Player": "Opponent"}}
 
-    </i>
-</p>
+    </p>
 
-<div class="board-container">
 
-    <app-pit [amount]="oppAmount" [endZone]="true"></app-pit>
-    <div class="pits">
-        <div class="opp-pits">
-            <ng-container *ngFor="let pit of [1,2,3,4,5,6]; let i=index;">
-                <app-pit (pitSelected)="onPitSelected($event, i, false)" [amount]="oppSeeds[i]" [disabled]="playerTurn">
-                </app-pit>
-            </ng-container>
+    <div class="board-container">
+
+        <app-pit [amount]="playerBAmount" [endZone]="true"></app-pit>
+        <div class="pits">
+            <div class="opp-pits">
+                <ng-container *ngFor="let pit of [1,2,3,4,5,6]; let i=index;">
+                    <app-pit (pitSelected)="onPitSelected($event, i, false)" [amount]="playerBSeeds[i]"
+                        [disabled]="true">
+                    </app-pit>
+                </ng-container>
+            </div>
+
+            <div class="player-pits">
+                <ng-container *ngFor="let pit of [1,2,3,4,5,6]; let i=index;">
+                    <app-pit (pitSelected)="onPitSelected($event, i, true)" [amount]="playerASeeds[i]"
+                        [disabled]="!playerATurn"></app-pit>
+                </ng-container>
+            </div>
         </div>
 
-        <div class="player-pits">
-            <ng-container *ngFor="let pit of [1,2,3,4,5,6]; let i=index;">
-                <app-pit (pitSelected)="onPitSelected($event, i, true)" [amount]="playerSeeds[i]"
-                    [disabled]="!playerTurn"></app-pit>
-            </ng-container>
-        </div>
+        <app-pit [amount]="playerAAmount" [endZone]="true"></app-pit>
     </div>
+</ng-container>
 
-    <app-pit [amount]="playerAmount" [endZone]="true"></app-pit>
-</div>
+
+<button (click)="win()">WIN</button>
+
 
 <simple-notifications [options]="notifOptions"></simple-notifications>
